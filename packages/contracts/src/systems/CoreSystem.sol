@@ -112,12 +112,16 @@ contract CoreSystem is System {
     if ((level + 1) % robberRate != 0) return uint32(oldRobber);
     uint256 r = _getRandomNumber();
     if (playerNumber < 10) {
-      robber += uint32((r % (level * level)) + 1);
+      robber = uint32((r % (level * level)) + 1);
     } else {
       uint256 robberId = (r % playerNumber) + 1;
       uint256 robberValue = uint256(Record.getHighestValue(uint16(robberId))) * (level * level) / (maxLevel * maxLevel);
-      if (robberValue == 0) robberValue++;
-      robber = uint32((robberId << 16) + robberValue);
+      if (robberValue == 0) {
+        r >>= 16;
+        robber = uint32((r % (level * level)) + 1);
+      } else {
+        robber = uint32((robberId << 16) + robberValue);
+      }
     }
   }
 

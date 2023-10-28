@@ -10,3 +10,4 @@ deploys/**/*.json
 
 
 src/codegen
+.env

@@ -37,6 +37,7 @@ contract CoreSystem is System {
     GameEnvData memory env = GameEnv.get();
     PlayerData memory data = Player.get(player);
     require(block.number <= data.lastUpdate + env.actionPeriod, "defeated");
+    require((data.level % env.robberRate != 0) || data.robber == 0, "beat the robber");
     uint16 newValue = _enterGear(data.value, isLeft? data.left : data.right);
     console.log("new value %d", newValue);
     if (newValue == 0) {
@@ -48,7 +49,6 @@ contract CoreSystem is System {
       _recordScore(player, levelNum, newValue);
       return;
     }
-    console.log("level %d", levelNum);
     Player.set(player, PlayerData({
       level: levelNum,
       value: newValue,
@@ -71,12 +71,14 @@ contract CoreSystem is System {
     uint16 robberValue = uint16(data.robber);
     if (robberId == playerId) {
       Player.setValue(player, data.value + robberValue);
+      Player.setRobber(player, 0);
       return;
     }
     uint64 playerScore = Record.getScore(playerId);
     uint64 robberScore = Record.getScore(robberId);
     if (data.value > robberValue) {
       Player.setValue(player, data.value - robberValue);
+      Player.setRobber(player, 0);
       if (robberScore > 0) {
         Record.setScore(playerId, playerScore + 1);
         Record.setScore(robberId, robberScore - 1);

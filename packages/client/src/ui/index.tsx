@@ -1,4 +1,5 @@
 import { Doors } from "./Doors";
+import { MockButtons } from "./MockButtons";
 import { Army } from "./army";
 
 const MainPage = () => {
@@ -12,6 +13,7 @@ const MainPage = () => {
         <div className="flex flex-col justify-center items-center h-screen">
           <Doors />
           <Army />
+          <MockButtons />
         </div>
       </div>
 

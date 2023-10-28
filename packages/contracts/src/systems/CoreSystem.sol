@@ -69,6 +69,10 @@ contract CoreSystem is System {
     uint16 playerId = PlayerInfo.getUuid(player);
     uint16 robberId = uint16(data.robber >> 16);
     uint16 robberValue = uint16(data.robber);
+    if (robberId == playerId) {
+      Player.setValue(player, data.value + robberValue);
+      return;
+    }
     uint64 playerScore = Record.getScore(playerId);
     uint64 robberScore = Record.getScore(robberId);
     if (data.value > robberValue) {

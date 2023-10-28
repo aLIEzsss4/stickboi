@@ -37,7 +37,9 @@ export default mudConfig({
         addr: "address",
       },
       valueSchema: {
+        // how many gears the player has passed through
         level: "uint16",
+        // the current value
         value: "uint16",
         // encoding rule: left = uint8 operation | uint16 change
         // change is a randomNumber in the range [1, levelNumber * 10]
@@ -58,6 +60,7 @@ export default mudConfig({
         // if else, game ends, playerScore++, robberScore--.
         // if the robber and the player are the same one, then playerValue += robberValue
         robber: "uint32",
+        // last action's block number
         lastUpdate: "uint64",
       },
     },
@@ -67,7 +70,11 @@ export default mudConfig({
       },
       valueSchema: {
         addr: "address",
+        // historical highest value
         highestValue: "uint16",
+        // accumulating score
+        // for each ended game, a player can accumulate (level / 10) + (value / 5000) score
+        // but be aware of that this score could be snatched away by others even when you're not playing
         score: "uint64",
       },
     }

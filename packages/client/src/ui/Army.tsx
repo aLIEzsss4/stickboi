@@ -47,22 +47,24 @@ export const Army = () => {
 
     const imageWidth = Math.min(
       boxWidth / imagesPerRow - ((boxWidth / imagesPerRow) % 2),
-      12
+      20
     );
 
-    const overlap = 0;
+    console.log("imageWidth: ", imageWidth, boxWidth, imagesPerRow);
 
     return (
       <div
         className={`flex flex-row flex-wrap items-center justify-center w-${boxWidth} h-32 bg-gray-200`}
+        style={{ width: `${boxWidth / 4}rem` }}
       >
         {charArray.map((v, i) => {
           return (
             <img
               key={i}
               src={`./assets/${v}.png`}
-              alt=""
-              className={`rounded-full -ml-${overlap} w-${imageWidth} h-${imageWidth} transform hover:scale-125 transition duration-200`}
+              alt={v}
+              className={`rounded-full h-auto transform hover:scale-125 transition duration-200`}
+              style={{ width: `${imageWidth / 4}rem` }}
             />
           );
         })}

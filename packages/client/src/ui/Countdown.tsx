@@ -50,5 +50,10 @@ export function useRemainingSeconds() {
 
 export function Countdown() {
   const { data: remainingSeconds } = useRemainingSeconds();
-  return <div className="m-8">Responds in {remainingSeconds} second</div>;
+
+  return (
+    <div>
+      <div className="m-8">Responds in {remainingSeconds} second</div>
+    </div>
+  );
 }

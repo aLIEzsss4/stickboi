@@ -1,5 +1,6 @@
 // decode uint24 to formula
 export function decodeDoorContent(
+  r: number,
   currentValue?: number,
   changeData?: number
 ): string {
@@ -14,7 +15,6 @@ export function decodeDoorContent(
   const result = operator === 0 ? currentValue + change : currentValue - change;
 
   // raffle to show one of + - * /
-  const r = Math.random();
   if (r < 0.25) {
     // show +
     const anoNumber = result - currentValue;

@@ -33,9 +33,18 @@ export function createSystemCalls(
   { worldContract, waitForTransaction }: SetupNetworkResult,
   { Counter }: ClientComponents
 ) {
-  const increment = async () => {};
+  const register = async () => {
+    const tx = await worldContract.write.forwarding_core_register();
+    await waitForTransaction(tx);
+  };
+
+  const startGame = async () => {
+    const tx = await worldContract.write.forwarding_core_startGame();
+    await waitForTransaction(tx);
+  };
 
   return {
-    increment,
+    register,
+    startGame,
   };
 }

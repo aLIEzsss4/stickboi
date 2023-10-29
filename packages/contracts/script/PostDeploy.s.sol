@@ -19,7 +19,7 @@ contract PostDeploy is Script {
 
     // configuration
     // set time window for each action to 5 blocks
-    GameEnv.setActionPeriod(5);
+    GameEnv.setActionPeriod(10);
     // player starts the game from 1
     GameEnv.setInitialValue(1);
     // every 5 levels, there will be a robber

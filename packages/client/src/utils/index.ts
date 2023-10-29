@@ -88,3 +88,19 @@ export function valueToCharArray(value: number): string[] {
 
   return arr;
 }
+
+export function shortenAddress(address?: string) {
+  if (!address) {
+    return "";
+  }
+
+  const checksumAddress =
+    address.length > 42
+      ? "0x" + address.substring(address.length - 40)
+      : address;
+
+  const firstPart = checksumAddress.substring(0, 6);
+  const lastPart = checksumAddress.substring(checksumAddress.length - 4);
+
+  return `${firstPart}.....${lastPart}`;
+}

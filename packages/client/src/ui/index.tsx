@@ -52,10 +52,9 @@ const MainPage = () => {
 
       <div className="flex-grow bg-gray-200 w-1/4">
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-2">Rankings/Points</h2>
+          <h2 className="text-xl font-semibold mb-2">Rankings</h2>
           <ul>
-            <li>The highest number the player reach.</li>
-            <li>How many doors player pass.</li>
+            <li>score = (level / 10) + (value / 5000)</li>
           </ul>
           <Rank />
         </div>

@@ -20,7 +20,7 @@ export const Middle = () => {
   const gameConfig = useComponentValue(GameEnv, singletonEntity);
 
   const isRegistered: boolean =
-    useComponentValue(PlayerInfo, playerEntity)?.uuid == undefined;
+    useComponentValue(PlayerInfo, playerEntity)?.uuid !== undefined;
 
   const hasRobber: boolean =
     playerData?.level % gameConfig?.robberRate === 0 &&

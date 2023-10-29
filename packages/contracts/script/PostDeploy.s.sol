@@ -18,8 +18,8 @@ contract PostDeploy is Script {
     StoreSwitch.setStoreAddress(worldAddress);
 
     // configuration
-    // set time window for each action to 5 blocks
-    GameEnv.setActionPeriod(10);
+    // set time window for each action to 30 blocks
+    GameEnv.setActionPeriod(30);
     // player starts the game from 1
     GameEnv.setInitialValue(1);
     // every 5 levels, there will be a robber

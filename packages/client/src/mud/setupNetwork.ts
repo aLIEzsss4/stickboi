@@ -80,6 +80,7 @@ export async function setupNetwork() {
     address: networkConfig.worldAddress as Hex,
     publicClient,
     startBlock: BigInt(networkConfig.initialBlockNumber),
+    indexerUrl: networkConfig?.indexerUrl,
   });
 
   /*

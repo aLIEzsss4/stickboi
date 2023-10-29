@@ -3,7 +3,7 @@ import { useMUD } from "../MUDContext";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { useEffect, useState } from "react";
 
-const timePerBlock: { [x: number]: number } = { 31_337: 1 };
+const timePerBlock: { [x: number]: number } = { 31_337: 1, 1398383: 0.5 };
 
 function usePassedBlock() {
   const {

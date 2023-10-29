@@ -1,6 +1,6 @@
 import { Doors } from "./Doors";
 import { MockButtons } from "./MockButtons";
-import { Army } from "./army";
+import { Army } from "./Army";
 
 const MainPage = () => {
     return (

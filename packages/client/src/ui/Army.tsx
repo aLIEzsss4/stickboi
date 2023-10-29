@@ -2,6 +2,7 @@ import { useComponentValue } from "@latticexyz/react";
 import { useState } from "react";
 import { useMUD } from "../MUDContext";
 import { valueToCharArray } from "../utils";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const Arrow = ({
   src,
@@ -63,7 +64,10 @@ export const Army = () => {
   } = useMUD();
 
   const value = useComponentValue(Player, playerEntity)?.value || 0;
-  const [selectedDoor, setSelectedDoor] = useState("");
+
+  // binding hot key
+  useHotkeys(["A", "ArrowLeft"], () => passLeftDoor(), [passLeftDoor]);
+  useHotkeys(["D","ArrowRight"], () => passRightDoor(), [passRightDoor]);
 
   return (
     <div>

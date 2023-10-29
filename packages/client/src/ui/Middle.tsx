@@ -6,6 +6,7 @@ import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { Robber } from "./Robber";
 import { Countdown, useRemainingSeconds } from "./Countdown";
 import { useDeadAlert } from "../hooks/useDeadAlert";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export const Middle = () => {
   const {
@@ -29,6 +30,12 @@ export const Middle = () => {
   const { data: remainingSeconds } = useRemainingSeconds();
   const isDead = remainingSeconds === 0;
 
+  const startGameFn = () => {
+    isRegistered ? startGame() : registerAndStartGame();
+  };
+
+  useHotkeys(["SPACE"], () => startGameFn(), [startGameFn]);
+
   if (playerData?.value >= 0 && !isDead) {
     return (
       <div className="w-160 bg-white-300">
@@ -43,12 +50,7 @@ export const Middle = () => {
     return (
       <div className="w-160 bg-white-300">
         <div className="flex flex-col justify-center items-center h-screen">
-          <div
-            className="btn btn-active m-4"
-            onClick={() => {
-              isRegistered ? startGame() : registerAndStartGame();
-            }}
-          >
+          <div className="btn btn-active m-4" onClick={startGameFn}>
             Start Game
           </div>
         </div>

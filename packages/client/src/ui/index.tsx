@@ -34,6 +34,16 @@ const MainPage = () => {
             Number 18532 = 3 Dog + 5 Nouns + 3 Milady + 1 Mefer + 1 wojak + 2
             stickboi
           </p>
+          <h2 className="text-xl font-semibold mb-2">Hotkeys</h2>
+          <p>
+            SPACE: Start Game
+            <br />
+            A/LEFT: Move left
+            <br />
+            D/RIGHT: Move right
+            <br />
+            W/UP: Battle
+          </p>
         </div>
       </div>
 

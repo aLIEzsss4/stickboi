@@ -1,6 +1,7 @@
 import { useComponentValue } from "@latticexyz/react";
 import { useMUD } from "../MUDContext";
 import { renderCharacters } from "./Army";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export function Robber() {
   const {
@@ -8,6 +9,9 @@ export function Robber() {
     network: { playerEntity },
     systemCalls: { battle },
   } = useMUD();
+
+  // binding hotkeys
+  useHotkeys(["ArrowUp", "W"], () => battle(), [battle]);
 
   const playerData = useComponentValue(Player, playerEntity);
   return (

@@ -4,7 +4,7 @@ import { decodeDoorContent } from "../utils";
 
 const Door = ({ content }: { content: string }) => (
   <div className="h-32 w-48 bg-gradient-to-r from-gray-200 to-gray-400 shadow-lg mx-8 m-4 flex items-center justify-center">
-    <div>{content}</div>
+    <div className="text-black">{content}</div>
   </div>
 );
 

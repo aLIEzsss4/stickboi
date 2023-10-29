@@ -4,6 +4,7 @@ import { Doors } from "./Doors";
 import { Army } from "./Army";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { Robber } from "./Robber";
+import { Countdown } from "./Countdown";
 
 export const Middle = () => {
   const {
@@ -22,10 +23,11 @@ export const Middle = () => {
     playerData?.level % gameConfig?.robberRate === 0 &&
     playerData?.robber !== 0;
 
-  if (playerData?.value !== 0) {
+  if (playerData?.value >= 0) {
     return (
       <div className="w-160 bg-white-300">
         <div className="flex flex-col justify-center items-center h-screen">
+          <Countdown />
           {hasRobber ? <Robber /> : <Doors />}
           <Army />
         </div>

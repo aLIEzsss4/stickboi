@@ -1,59 +1,93 @@
-const Arrow = ({ src, content, onSelect }: { src: string; content: string; onSelect: () => void }) => {
+import { useComponentValue } from "@latticexyz/react";
+import { useState } from "react";
+import { useMUD } from "../MUDContext";
+import { valueToCharArray } from "../utils";
+
+const Arrow = ({
+  src,
+  content,
+  onClick,
+}: {
+  src: string;
+  content: string;
+  onClick: () => void;
+}) => {
   // TODO: click to select the left door or the right door
-    return (
-        <div className="w-20 m-16" onClick={onSelect}>
-            <img src={src} alt={content} />
-            <div className="whitespace-nowrap w-20"> {content}</div>
-        </div>
-    );
+  return (
+    <div className="w-20 m-16" onClick={onClick}>
+      {/* <img src={src} alt={content} /> */}
+      <div className="whitespace-nowrap w-24 btn btn-active"> {content}</div>
+    </div>
+  );
 };
 
 export const Army = () => {
-    const [characterCount, setCharacterCount] = useState(0);
-    const [selectedDoor, setSelectedDoor] = useState("");
+  const {
+    components: { Player },
+    network: { playerEntity },
+    systemCalls: { passLeftDoor, passRightDoor },
+  } = useMUD();
 
-    const handleSelectDoor = (door: string) => {
-        setSelectedDoor(door);
-        // Handle door selection logic here
-    };
+  const value = useComponentValue(Player, playerEntity)?.value || 0;
+  const [selectedDoor, setSelectedDoor] = useState("");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const numberFromChain = await fetchNumberFromChain();
-            setCharacterCount(numberFromChain);
-        };
+  const handleSelectDoor = (door: string) => {
+    setSelectedDoor(door);
+    // Handle door selection logic here
+  };
 
-        fetchData();
-    }, []);
+  // max three row, 6 image per row
+  const renderCharacters = () => {
+    const boxWidth = 48; // 定义你的box宽度
 
-    const fetchNumberFromChain = async () => {
-        return Math.floor(Math.random() * 10) + 1;
-    };
+    const charArray = valueToCharArray(value);
+    const charCount = charArray.length;
 
-    const renderCharacters = () => {
-        const characters = [];
+    const imagesPerRow = Math.min(6, charCount);
 
-        for (let i = 0; i < characterCount; i++) {
-            characters.push(
-                <img
-                    key={i}
-                    src="./assets/stickman.png"
-                    alt="Person"
-                    className="h-20 my-4"
-                />
-            );
-        }
+    const imageWidth = Math.min(
+      boxWidth / imagesPerRow - ((boxWidth / imagesPerRow) % 2),
+      12
+    );
 
-        return characters;
-    };
+    const overlap = 0;
 
     return (
-        <div>
-            <div className="flex items-center flex-row">
-                <Arrow src={"./assets/arrow_left.png"} content="Move Left" onSelect={() => handleSelectDoor("left")} />
-                {renderCharacters()}
-                <Arrow src={"./assets/arrow_right.png"} content="Move Right" onSelect={() => handleSelectDoor("right")} />
-            </div>
-        </div>
+      <div
+        className={`flex flex-row flex-wrap items-center justify-center w-${boxWidth} h-32 bg-gray-200`}
+      >
+        {charArray.map((v, i) => {
+          return (
+            <img
+              key={i}
+              src={`./assets/${v}.png`}
+              alt=""
+              className={`rounded-full -ml-${overlap} w-${imageWidth} h-${imageWidth} transform hover:scale-125 transition duration-200`}
+            />
+          );
+        })}
+      </div>
     );
+  };
+
+  return (
+    <div>
+      <div className="flex items-center flex-row">
+        <Arrow
+          src={"./assets/arrow_left.png"}
+          content="Move Left"
+          onClick={passLeftDoor}
+        />
+        <div className="flex flex-col items-center">
+          <div className="my-2 font-mono">{value}</div>
+          {renderCharacters()}
+        </div>
+        <Arrow
+          src={"./assets/arrow_right.png"}
+          content="Move Right"
+          onClick={passRightDoor}
+        />
+      </div>
+    </div>
+  );
 };

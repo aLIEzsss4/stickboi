@@ -31,7 +31,7 @@ export function createSystemCalls(
    *   (https://github.com/latticexyz/mud/blob/main/templates/react/packages/client/src/mud/setupNetwork.ts#L77-L83).
    */
   { worldContract, waitForTransaction }: SetupNetworkResult,
-  { Counter }: ClientComponents
+  {}: ClientComponents
 ) {
   const register = async () => {
     const tx = await worldContract.write.forwarding_core_register();
@@ -43,8 +43,20 @@ export function createSystemCalls(
     await waitForTransaction(tx);
   };
 
+  const passLeftDoor = async () => {
+    const tx = await worldContract.write.forwarding_core_passThrough([true]);
+    await waitForTransaction(tx);
+  };
+
+  const passRightDoor = async () => {
+    const tx = await worldContract.write.forwarding_core_passThrough([false]);
+    await waitForTransaction(tx);
+  };
+
   return {
     register,
     startGame,
+    passLeftDoor,
+    passRightDoor,
   };
 }

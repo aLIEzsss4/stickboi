@@ -35,17 +35,56 @@ export function decodeDoorContent(
     // show *
     const anoNumber = result / currentValue;
     if (anoNumber >= 0) {
-      return `x * ${Number(anoNumber.toFixed(2))}`;
+      return `x * ${Number(anoNumber.toFixed(4))}`;
     } else {
-      return `x * (${Number(anoNumber.toFixed(2))})`;
+      return `x * (${Number(anoNumber.toFixed(4))})`;
     }
   } else {
     // show /
     const anoNumber = currentValue / result;
     if (anoNumber > 0) {
-      return `x / ${Number(anoNumber.toFixed(2))}`;
+      return `x / ${Number(anoNumber.toFixed(4))}`;
     } else {
-      return `x / (${Number(anoNumber.toFixed(2))})`;
+      return `x / (${Number(anoNumber.toFixed(4))})`;
     }
   }
+}
+
+/**
+ * 1: Dog
+ * 2: Nouns
+ * 3: Shiba
+ * 4: Milady
+ * 5: Pepe
+ * 6: Mfers
+ * 7: Wojak
+ * 8: Stickman
+ */
+
+const weights: { [x: string]: number } = {
+  dog: 5000,
+  nouns: 625,
+  shiba: 500,
+  milady: 125,
+  pepe: 50,
+  mfers: 25,
+  wojak: 5,
+  stickman: 1,
+};
+
+export function valueToCharArray(value: number): string[] {
+  const arr: string[] = [];
+  let rest = value;
+
+  Object.keys(weights).forEach((key: string) => {
+    const count = Math.floor(rest / weights[key]);
+
+    rest = rest - count * weights[key];
+
+    for (let i = 1; i <= count; i++) {
+      arr.push(key);
+    }
+  });
+
+  return arr;
 }

@@ -1,23 +1,26 @@
 import { useComponentValue } from "@latticexyz/react";
-import { useState } from "react";
 import { useMUD } from "../MUDContext";
 import { valueToCharArray } from "../utils";
 import { useHotkeys } from "react-hotkeys-hook";
+import useAppStore from "../utils/zustand";
 
 const Arrow = ({
-  src,
+  enable,
   content,
   onClick,
 }: {
-  src: string;
+  enable: boolean;
   content: string;
-  onClick: () => void;
+  onClick: () => Promise<void>;
 }) => {
   // TODO: click to select the left door or the right door
   return (
     <div className="w-20 m-16" onClick={onClick}>
-      {/* <img src={src} alt={content} /> */}
-      <div className="whitespace-nowrap w-24 btn btn-active"> {content}</div>
+      {enable ? (
+        <div className="whitespace-nowrap w-24 btn btn-active">{content}</div>
+      ) : (
+        <div className="whitespace-nowrap w-24 btn btn-disabled">{content}</div>
+      )}
     </div>
   );
 };
@@ -56,35 +59,52 @@ export const renderCharacters = (value: number) => {
   );
 };
 
-export const Army = () => {
+export const Army = ({ hasRobber }: { hasRobber: boolean }) => {
   const {
     components: { Player },
     network: { playerEntity },
     systemCalls: { passLeftDoor, passRightDoor },
   } = useMUD();
 
+  const enableBtn = useAppStore((state) => state.enableBtn);
+  const setEnableBtn = useAppStore((state) => state.setEnableBtn);
+
+  const passLeftDoorFn = async () => {
+    setEnableBtn(false);
+    passLeftDoor().finally(() => {
+      setEnableBtn(true);
+    });
+  };
+
+  const passRightDoorFn = async () => {
+    setEnableBtn(false);
+    passRightDoor().finally(() => {
+      setEnableBtn(true);
+    });
+  };
+
   const value = useComponentValue(Player, playerEntity)?.value || 0;
 
   // binding hot key
-  useHotkeys(["A", "ArrowLeft"], () => passLeftDoor(), [passLeftDoor]);
-  useHotkeys(["D","ArrowRight"], () => passRightDoor(), [passRightDoor]);
+  useHotkeys(["A", "ArrowLeft"], () => passLeftDoorFn(), [passLeftDoorFn]);
+  useHotkeys(["D", "ArrowRight"], () => passRightDoorFn(), [passRightDoorFn]);
 
   return (
     <div>
       <div className="flex items-center flex-row">
         <Arrow
-          src={"./assets/arrow_left.png"}
+          enable={enableBtn && !hasRobber}
           content="Move Left"
-          onClick={passLeftDoor}
+          onClick={passLeftDoorFn}
         />
         <div className="flex flex-col items-center">
           <div className="my-2 font-mono">{value}</div>
           {renderCharacters(value)}
         </div>
         <Arrow
-          src={"./assets/arrow_right.png"}
+          enable={enableBtn && !hasRobber}
           content="Move Right"
-          onClick={passRightDoor}
+          onClick={passRightDoorFn}
         />
       </div>
     </div>

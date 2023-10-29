@@ -50,10 +50,18 @@ export function useRemainingSeconds() {
 
 export function Countdown() {
   const { data: remainingSeconds } = useRemainingSeconds();
+  const {
+    components: { Player },
+    network: { playerEntity },
+  } = useMUD();
+
+  const playerData = useComponentValue(Player, playerEntity);
 
   return (
     <div>
-      <div className="m-8">Responds in {remainingSeconds} second</div>
+      <div className="m-8">
+        Respond to level {playerData?.level} in {remainingSeconds} second
+      </div>
     </div>
   );
 }

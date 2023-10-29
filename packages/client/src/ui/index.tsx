@@ -3,8 +3,8 @@ import { Rank } from "./Rank";
 
 const MainPage = () => {
   return (
-    <div className="flex justify-between">
-      <div className="flex-grow bg-gray-200 w-1/3">
+    <div className="flex overflow-hidden">
+      <div className="flex-grow bg-gray-200 w-1/5">
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-2">Gameplay</h2>
           <p>
@@ -50,7 +50,7 @@ const MainPage = () => {
       {/* middle */}
       <Middle />
 
-      <div className="flex-grow bg-gray-200 w-1/4">
+      <div className="flex-grow bg-gray-200 w-1/5">
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-2">Rankings</h2>
           <ul>

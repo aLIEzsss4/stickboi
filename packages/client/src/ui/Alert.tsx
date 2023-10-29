@@ -1,9 +1,9 @@
-import useStore from "../utils/zustand";
+import useAppStore from "../utils/zustand";
 
 export function Alert() {
-  const info = useStore((state) => state.alertInfo);
-  const isShow = useStore((state) => state.showAlert);
-  const setShow = useStore((state) => state.setShowAlert);
+  const info = useAppStore((state) => state.alertInfo);
+  const isShow = useAppStore((state) => state.showAlert);
+  const setShow = useAppStore((state) => state.setShowAlert);
 
   if (isShow) {
     return (

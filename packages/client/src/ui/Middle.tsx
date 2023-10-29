@@ -7,6 +7,7 @@ import { Robber } from "./Robber";
 import { Countdown, useRemainingSeconds } from "./Countdown";
 import { useDeadAlert } from "../hooks/useDeadAlert";
 import { useHotkeys } from "react-hotkeys-hook";
+import useAppStore from "../utils/zustand";
 
 export const Middle = () => {
   const {
@@ -20,6 +21,9 @@ export const Middle = () => {
   const playerData = useComponentValue(Player, playerEntity);
   const gameConfig = useComponentValue(GameEnv, singletonEntity);
 
+  const enableBtn = useAppStore((state) => state.enableBtn);
+  const setEnableBtn = useAppStore((state) => state.setEnableBtn);
+
   const isRegistered: boolean =
     useComponentValue(PlayerInfo, playerEntity)?.uuid !== undefined;
 
@@ -31,7 +35,12 @@ export const Middle = () => {
   const isDead = remainingSeconds === 0;
 
   const startGameFn = () => {
-    isRegistered ? startGame() : registerAndStartGame();
+    const run = isRegistered ? startGame : registerAndStartGame;
+
+    setEnableBtn(false);
+    run().finally(() => {
+      setEnableBtn(true);
+    });
   };
 
   useHotkeys(["SPACE"], () => startGameFn(), [startGameFn]);
@@ -42,7 +51,7 @@ export const Middle = () => {
         <div className="flex flex-col justify-center items-center h-screen">
           <Countdown />
           {hasRobber ? <Robber /> : <Doors />}
-          <Army />
+          <Army hasRobber={hasRobber} />
         </div>
       </div>
     );
@@ -50,9 +59,15 @@ export const Middle = () => {
     return (
       <div className="w-160 bg-white-300">
         <div className="flex flex-col justify-center items-center h-screen">
-          <div className="btn btn-active m-4" onClick={startGameFn}>
-            Start Game
-          </div>
+          {enableBtn ? (
+            <div className="btn btn-active m-4" onClick={startGameFn}>
+              Start Game
+            </div>
+          ) : (
+            <div className="btn btn-disabled m-4" onClick={startGameFn}>
+              Start Game
+            </div>
+          )}
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useStore from "../utils/zustand";
+import useAppStore from "../utils/zustand";
 import { useRemainingSeconds } from "../ui/Countdown";
 import { useLocalStorage } from "react-use";
 import { useMUD } from "../MUDContext";
@@ -16,8 +16,8 @@ export function useDeadAlert() {
     ? Number(playerData?.lastUpdate)
     : 0;
 
-  const setShow = useStore((state) => state.setShowAlert);
-  const setInfo = useStore((state) => state.setAlertInfo);
+  const setShow = useAppStore((state) => state.setShowAlert);
+  const setInfo = useAppStore((state) => state.setAlertInfo);
   const [alerted, setAlerted] = useLocalStorage<{ [x: number]: boolean }>(
     "record-alerted",
     {}

@@ -21,7 +21,7 @@ export function Rank() {
     if (!b) {
       return 1;
     }
-    return Number(a.score) - Number(b.score);
+    return Number(b.score) - Number(a.score);
   });
 
   return (
@@ -60,7 +60,7 @@ export function Rank() {
                         {shortenAddress(item?.addr)}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {item?.score ? Number(item?.highestValue) : 0}
+                        {item?.highestValue ? Number(item?.highestValue) : 0}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                         {item?.score ? Number(item?.score) : 0}

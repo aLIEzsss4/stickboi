@@ -18,7 +18,7 @@ contract CoreSystem is System {
     address player = _msgSender();
     GameEnvData memory env = GameEnv.get();
     PlayerData memory data = Player.get(player);
-    require(block.number > data.lastUpdate + env.actionPeriod, "last game not ended");
+    require(data.lastUpdate == 0 || block.number > data.lastUpdate + env.actionPeriod, "last game not ended");
     _checkAndRecordScore(player);
     Player.set(player, PlayerData({
       level: 0,
@@ -69,6 +69,16 @@ contract CoreSystem is System {
     uint16 playerId = PlayerInfo.getUuid(player);
     uint16 robberId = uint16(data.robber >> 16);
     uint16 robberValue = uint16(data.robber);
+    // if a player has not yet registered
+    if (playerId == 0) {
+      if (data.value > robberValue) {
+        Player.setValue(player, data.value - robberValue);
+        Player.setRobber(player, 0);
+      } else {
+        Player.deleteRecord(player);
+      }
+      return;
+    }
     if (robberId == playerId) {
       Player.setValue(player, data.value + robberValue);
       Player.setRobber(player, 0);
@@ -134,12 +144,15 @@ contract CoreSystem is System {
   function _checkAndRecordScore(address player) internal {
     PlayerData memory data = Player.get(player);
     if (data.level > 0) {
-      _recordScore(player, data.level, data.value);
+      _recordScore(player, data.level, 0);
     }
   }
 
   function _recordScore(address player, uint256 level, uint256 value) internal {
     uint16 uuid = PlayerInfo.getUuid(player);
+    if (uuid == 0) {
+      return;
+    }
     RecordData memory record = Record.get(uuid);
     Record.set(uuid, RecordData({
       addr: player,

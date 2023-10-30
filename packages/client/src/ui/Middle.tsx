@@ -8,6 +8,8 @@ import { Countdown, useRemainingSeconds } from "./Countdown";
 import { useDeadAlert } from "../hooks/useDeadAlert";
 import { useHotkeys } from "react-hotkeys-hook";
 import useAppStore from "../utils/zustand";
+import { useState } from "react";
+import { Plugin } from "../plugin";
 
 export const Middle = () => {
   const {
@@ -30,6 +32,10 @@ export const Middle = () => {
   const enableBtn = useAppStore((state) => state.enableBtn);
   const setEnableBtn = useAppStore((state) => state.setEnableBtn);
 
+  const { setPluginActive } = useAppStore();
+
+  const [loadingStartGame, setLoadingStartGame] = useState(false);
+
   const isRegistered: boolean =
     useComponentValue(PlayerInfo, playerEntity)?.uuid !== undefined;
 
@@ -44,9 +50,16 @@ export const Middle = () => {
     const run = isRegistered ? startGame : registerAndStartGame;
 
     setEnableBtn(false);
+    setLoadingStartGame(true);
     run().finally(() => {
       setEnableBtn(true);
+      setLoadingStartGame(false);
     });
+  };
+
+  const startPluginFn = async () => {
+    await startGameFn();
+    await setPluginActive(true);
   };
 
   useHotkeys(["SPACE"], () => startGameFn(), [startGameFn]);
@@ -55,6 +68,7 @@ export const Middle = () => {
     return (
       <div className="w-160 bg-white-300">
         <div className="flex flex-col justify-center items-center h-screen">
+          <Plugin />
           <Countdown />
           {hasRobber ? <Robber /> : <Doors />}
           <Army hasRobber={hasRobber} />
@@ -66,14 +80,29 @@ export const Middle = () => {
       <div className="w-160 bg-white-300">
         <div className="flex flex-col justify-center items-center h-screen">
           <div>Loading {progress}%</div>
-          {enableBtn && progress == 100 ? (
+          {loadingStartGame ? (
             <div className="btn btn-active m-4" onClick={startGameFn}>
-              Start Game
+              loading...
             </div>
           ) : (
-            <div className="btn btn-disabled m-4" onClick={startGameFn}>
-              Start Game
-            </div>
+            <>
+              <div
+                className={`btn  m-4 ${
+                  progress == 100 ? "btn-active" : " btn-disabled"
+                }`}
+                onClick={startGameFn}
+              >
+                Start Game
+              </div>
+              <div
+                className={`btn  m-4 ${
+                  progress == 100 ? "btn-active" : " btn-disabled"
+                }`}
+                onClick={startPluginFn}
+              >
+                Start Plugin Join Game
+              </div>
+            </>
           )}
         </div>
       </div>

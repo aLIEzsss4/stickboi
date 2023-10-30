@@ -25,10 +25,13 @@ export function Robber() {
   useHotkeys(["ArrowUp", "W"], () => battleFn(), [battleFn]);
 
   const playerData = useComponentValue(Player, playerEntity);
+
+  const robberValue = playerData?.robber ? playerData?.robber & 0xffff : 0;
+
   return (
     <div className="flex flex-col items-center m-4">
-      <div className="m-4">{playerData?.robber}</div>
-      {renderCharacters(playerData?.robber || 0)}
+      <div className="m-4">{robberValue}</div>
+      {renderCharacters(robberValue)}
       {enableBtn ? (
         <div className="btn btn-active m-4" onClick={battleFn}>
           Battle

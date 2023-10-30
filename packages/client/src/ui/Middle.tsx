@@ -12,9 +12,15 @@ import useAppStore from "../utils/zustand";
 export const Middle = () => {
   const {
     components: { Player, PlayerInfo, GameEnv },
-    network: { playerEntity },
+    network: {
+      playerEntity,
+      components: { SyncProgress },
+    },
     systemCalls: { registerAndStartGame, startGame },
   } = useMUD();
+
+  const progress =
+    useComponentValue(SyncProgress, singletonEntity)?.percentage || 0;
 
   useDeadAlert();
 
@@ -59,7 +65,8 @@ export const Middle = () => {
     return (
       <div className="w-160 bg-white-300">
         <div className="flex flex-col justify-center items-center h-screen">
-          {enableBtn ? (
+          <div>Loading {progress}%</div>
+          {enableBtn && progress == 100 ? (
             <div className="btn btn-active m-4" onClick={startGameFn}>
               Start Game
             </div>

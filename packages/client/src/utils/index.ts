@@ -89,6 +89,15 @@ export function valueToCharArray(value: number): string[] {
   return arr;
 }
 
+export function decodeRobber(data?: number): { uuid: number; value: number } {
+  if (!data) {
+    return { uuid: 0, value: 0 };
+  }
+  const value = data & 0xffff;
+  const uuid = data >> 16;
+  return { uuid, value };
+}
+
 export function shortenAddress(address?: string) {
   if (!address) {
     return "";

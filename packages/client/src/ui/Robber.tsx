@@ -3,6 +3,7 @@ import { useMUD } from "../MUDContext";
 import { renderCharacters } from "./Army";
 import { useHotkeys } from "react-hotkeys-hook";
 import useAppStore from "../utils/zustand";
+import { decodeRobber } from "../utils";
 
 export function Robber() {
   const {
@@ -26,7 +27,7 @@ export function Robber() {
 
   const playerData = useComponentValue(Player, playerEntity);
 
-  const robberValue = playerData?.robber ? playerData?.robber & 0xffff : 0;
+  const { value: robberValue } = decodeRobber(playerData?.robber);
 
   return (
     <div className="flex flex-col items-center m-4">

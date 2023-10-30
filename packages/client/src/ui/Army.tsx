@@ -41,7 +41,7 @@ export const renderCharacters = (value: number) => {
 
   return (
     <div
-      className={`flex flex-row flex-wrap items-center justify-center w-${boxWidth} h-32 bg-gray-200`}
+      className={`flex flex-row flex-wrap items-center justify-center w-${boxWidth} h-32 bg-gray-200 mb-4`}
       style={{ width: `${boxWidth / 4}rem` }}
     >
       {charArray.map((v, i) => {

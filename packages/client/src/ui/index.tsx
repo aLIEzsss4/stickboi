@@ -39,8 +39,8 @@ const MainPage = () => {
             <br />
             1 Dog = 5000 stickboi
             <br />
-            Example: Number 18532 = 3 Dog + 5 Nouns + 3 Milady + 1 Mefer + 1 wojak + 2
-            stickboi
+            Example: Number 18532 = 3 Dog + 5 Nouns + 3 Milady + 1 Mefer + 1
+            wojak + 2 stickboi
           </p>
           <h2 className="text-xl font-semibold my-2">Hotkeys</h2>
           <p>
@@ -69,7 +69,10 @@ const MainPage = () => {
       <div className="flex-grow bg-gray-200 w-1/5 overflow-auto h-screen">
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-2">Rankings</h2>
-          <ul>
+          <div className="text-sm text-gray-400">
+          only shows data for dead and cleared players
+          </div>
+          <ul className="mt-1">
             <li>score = (level / 10) + (value / 5000)</li>
           </ul>
           <Rank />

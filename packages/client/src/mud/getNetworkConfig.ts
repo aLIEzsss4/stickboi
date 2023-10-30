@@ -59,6 +59,7 @@ export async function getNetworkConfig() {
   if (!chain) {
     throw new Error(`Chain ${chainId} not found`);
   }
+  const indexerUrl = chain.indexerUrl;
 
   /*
    * Get the address of the World. If you want to use a
@@ -91,5 +92,6 @@ export async function getNetworkConfig() {
     faucetServiceUrl: params.get("faucet") ?? chain.faucetUrl,
     worldAddress,
     initialBlockNumber,
+    indexerUrl,
   };
 }

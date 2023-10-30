@@ -9,9 +9,13 @@ export function Rank() {
     network: { walletClient },
   } = useMUD();
 
-  const rankList = useEntityQuery([Has(Record)]).map((uuid) => {
-    return getComponentValue(Record, uuid);
-  });
+  const rankList = useEntityQuery([Has(Record)])
+    .map((uuid) => {
+      return getComponentValue(Record, uuid);
+    })
+    .filter((i) => {
+      return i?.addr !== "0x0000000000000000000000000000000000000000";
+    });
 
   // sort the array by score
   rankList.sort((a, b) => {

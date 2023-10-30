@@ -4,7 +4,7 @@ import { Rank } from "./Rank";
 const MainPage = () => {
   return (
     <div className="flex overflow-hidden">
-      <div className="flex-grow bg-gray-200 w-1/5">
+      <div className="flex-grow bg-gray-200 w-1/5 overflow-hidden">
         <div className="p-4">
           <h2 className="text-2xl font-semibold mb-2">Stickboi</h2>
           <h2 className="text-xl font-semibold mb-2">Gameplay</h2>
@@ -66,7 +66,7 @@ const MainPage = () => {
       {/* middle */}
       <Middle />
 
-      <div className="flex-grow bg-gray-200 w-1/5">
+      <div className="flex-grow bg-gray-200 w-1/5 overflow-auto h-screen">
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-2">Rankings</h2>
           <ul>

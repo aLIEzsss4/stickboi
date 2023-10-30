@@ -7,17 +7,23 @@ const MainPage = () => {
       <div className="flex-grow bg-gray-200 w-1/5">
         <div className="p-4">
           <h2 className="text-2xl font-semibold mb-2">Stickboi</h2>
-
           <h2 className="text-xl font-semibold mb-2">Gameplay</h2>
-          <p>
-            Start as one player, move forward, and face two doors with random
-            numbers. Choose a door to pass. Points are calculated based on the
-            number on the door. The game ends if the number is negative or
-            manually by the player.
-          </p>
-          <h2 className="text-xl font-semibold mb-2">
+          Start from a stickboi, you need to move forward, and make choice
+          between two doors. The number will change according to the fomula on
+          doors.
+          <br />
+          Every time you pass through several doors, robbers appear and you need
+          to battle with them.
+          <br />
+          The game ends if the number is negative or player does not response on
+          time.
+          <br />
+          <h2 className="text-xl font-semibold my-2">
             Quantity Conversion Rule
           </h2>
+          As the number increase, stickbois will be merged to higher level
+          memes, rules are following:
+          <br />
           <p>
             1 wojak = 5 stickboi
             <br />
@@ -33,10 +39,10 @@ const MainPage = () => {
             <br />
             1 Dog = 5000 stickboi
             <br />
-            Number 18532 = 3 Dog + 5 Nouns + 3 Milady + 1 Mefer + 1 wojak + 2
+            Example: Number 18532 = 3 Dog + 5 Nouns + 3 Milady + 1 Mefer + 1 wojak + 2
             stickboi
           </p>
-          <h2 className="text-xl font-semibold mb-2">Hotkeys</h2>
+          <h2 className="text-xl font-semibold my-2">Hotkeys</h2>
           <p>
             SPACE: Start Game
             <br />
@@ -46,6 +52,14 @@ const MainPage = () => {
             <br />
             W/UP: Battle
           </p>
+          <h2 className="text-xl font-semibold my-2">Resources</h2>
+          Github:{" "}
+          <a
+            href="https://github.com/HelheimLabs/stickboi"
+            className="text-blue-500 hover:text-blue-700"
+          >
+            https://github.com/HelheimLabs/stickboi
+          </a>
         </div>
       </div>
 

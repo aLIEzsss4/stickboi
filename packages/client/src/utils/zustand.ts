@@ -7,6 +7,8 @@ export interface ZuStore {
   setAlertInfo: (value: string) => void;
   enableBtn: boolean;
   setEnableBtn: (value: boolean) => void;
+  pluginActive: boolean;
+  setPluginActive: (falg: boolean) => void;
 }
 
 const useAppStore = create<ZuStore>((set) => ({
@@ -19,6 +21,10 @@ const useAppStore = create<ZuStore>((set) => ({
   enableBtn: true,
   setEnableBtn: (value: boolean) => {
     set({ enableBtn: value });
+  },
+  pluginActive:false,
+  setPluginActive: (falg: boolean) => {
+    set({ pluginActive: falg });
   },
 }));
 

@@ -20,6 +20,7 @@
     "@latticexyz/store-sync": "2.0.0-next.12",
     "@latticexyz/utils": "2.0.0-next.12",
     "@latticexyz/world": "2.0.0-next.12",
+    "autoprefixer": "^10.4.16",
     "contracts": "workspace:^",
     "daisyui": "^3.9.4",
     "postcss": "^8.4.31",
